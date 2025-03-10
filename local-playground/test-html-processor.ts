@@ -21,6 +21,7 @@ async function fetchAndProcess(url: string, format: FormatOption = 'markdown'): 
     console.log(`Processing HTML (${Math.round(html.length / 1024)} KB) with ${format} format...`);
 
     const result = processHtml(html, format, url);
+    console.log(result.parsed);
 
     // Print results
     console.log('\n----------- RESULTS -----------');
@@ -77,7 +78,10 @@ async function runTests() {
     'https://developer.mozilla.org/en-US/docs/Web/JavaScript'
   ];
 
-  const formats: FormatOption[] = ['markdown', 'text'];
+  const formats: FormatOption[] = [
+    // 'markdown',
+    'text'
+  ];
 
   for (const url of urls) {
     for (const format of formats) {

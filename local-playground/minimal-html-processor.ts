@@ -28,7 +28,7 @@ export type FormatOption = 'markdown' | 'text';
  * @param baseUrl Optional base URL for resolving relative links
  * @returns Processed content and links
  */
-export function processHtml(html: string, format: FormatOption = 'markdown', baseUrl?: string): ProcessedHTML {
+export function processHtml(html: string, format: FormatOption = 'markdown', baseUrl?: string) {
   // Parse the HTML with linkedom
   let dom = parseHTML(html);
   if (!dom.window.document.documentElement) {
@@ -83,7 +83,7 @@ export function processHtml(html: string, format: FormatOption = 'markdown', bas
 
   // Try to extract main content with Readability
   let mainContent: string;
-  let readabilityResult: ReturnType<Readability["parse"]> = null;
+  let readabilityResult: ReturnType<Readability["parse"]> | null = null;
   try {
     readabilityResult = new Readability(dom.window.document.cloneNode(true) as any).parse();
     if (readabilityResult && readabilityResult.content) {
@@ -135,7 +135,8 @@ export function processHtml(html: string, format: FormatOption = 'markdown', bas
     content: cleanedContent,
     title: readabilityResult?.title || title,
     description,
-    links
+    links,
+    parsed: readabilityResult
   };
 }
 
